@@ -1,43 +1,38 @@
 import CoursesDao from "./dao.js";
 import EnrollmentsDao from "../Enrollments/dao.js";
 
-export default function CourseRoutes(app, db) {
-  const dao = CoursesDao(db);
-  const enrollmentsDao = EnrollmentsDao(db);
+export default function CourseRoutes(app) {
+  const dao = CoursesDao();
+  const enrollmentsDao = EnrollmentsDao();
 
-  const findAllCourses = (req, res) => {
-    const courses = dao.findAllCourses();
+  const findAllCourses = async (req, res) => {
+    const courses = await dao.findAllCourses();
     res.json(courses);
   };
 
-  const createCourse = (req, res) => {
-    const currentUser = req.session ? req.session["currentUser"] : null;
-    const newCourse = dao.createCourse(req.body);
-    if (currentUser) {
-      enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
-    }
+  const createCourse =  async (req, res) => {
+    const newCourse = await dao.createCourse(req.body);
+    const currentUser = req.session["currentUser"];
+    enrollmentsDao.enrollUserInCourse(currentUser._id, newCourse._id);
     res.json(newCourse);
+
   };
 
-  const deleteCourse = (req, res) => {
+  const deleteCourse =  async (req, res) => {
     const { courseId } = req.params;
-    dao.deleteCourse(courseId);
-    res.sendStatus(200);
+    const status = await dao.deleteCourse(courseId);
+    res.send(status);
+
   };
 
-  const updateCourse = (req, res) => {
+  const updateCourse =  async (req, res) => {
     const { courseId } = req.params;
     const courseUpdates = req.body;
-    const updated = dao.updateCourse(courseId, courseUpdates);
-    if (!updated) {
-      res.sendStatus(404);
-      return;
-    }
-    // respond with 204 No Content or 200 with updated object; using 200 with object is convenient
-    res.json(updated);
+    const status = await dao.updateCourse(courseId, courseUpdates);
+    res.send(status);
   };
 
-  const findCoursesForEnrolledUser = (req, res) => {
+  const findCoursesForEnrolledUser =  async (req, res) => {
     let { userId } = req.params;
     if (userId === "current") {
       const currentUser = req.session ? req.session["currentUser"] : null;
@@ -47,7 +42,7 @@ export default function CourseRoutes(app, db) {
       }
       userId = currentUser._id;
     }
-    const courses = dao.findCoursesForEnrolledUser(userId);
+    const courses = await dao.findCoursesForEnrolledUser(userId);
     res.json(courses);
   };
 
