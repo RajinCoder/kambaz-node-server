@@ -20,7 +20,7 @@ app.use(
     origin: process.env.CLIENT_URL || "http://localhost:3000",
   })
 );
-
+console.log(process.env.CLIENT_URL)
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kambaz",
   resave: false,
