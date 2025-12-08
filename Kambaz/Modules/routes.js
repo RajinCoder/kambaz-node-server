@@ -6,8 +6,9 @@ export default function ModulesRoutes(app, db) {
   const findModulesForCourse = (req, res) => {
     const { courseId } = req.params;
     const modules = dao.findModulesForCourse(courseId);
-    res.send(modules);
-  };
+    res.json(modules);
+  }
+
 
   const createModuleForCourse = (req, res) => {
     const { courseId } = req.params;
@@ -25,12 +26,13 @@ export default function ModulesRoutes(app, db) {
     res.send(status);
   };
 
-  const updateModule = (req, res) => {
-    const { moduleId } = req.params;
-    const moduleUpdates = req.body;
-    const updated = dao.updateModule(moduleId, moduleUpdates);
-    res.send(updated);
-  };
+  const updateModule = async (req, res) => {
+  const { moduleId } = req.params;
+  const moduleUpdates = req.body;
+  const status = await dao.updateModule(moduleId, moduleUpdates);
+  res.send(status);
+}
+
 
   app.post("/api/courses/:courseId/modules", createModuleForCourse);
   app.get("/api/courses/:courseId/modules", findModulesForCourse);

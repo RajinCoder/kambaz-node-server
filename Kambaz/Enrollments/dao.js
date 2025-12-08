@@ -24,11 +24,17 @@ export default function EnrollmentsDao(db) {
     const after = db.enrollments.length;
     return { deleted: after < before };
   }
+    function enrollUserInCourse(userId, courseId) {
+    const { enrollments } = db;
+    enrollments.push({ _id: uuidv4(), user: userId, course: courseId });
+  }
+
 
   return {
     createEnrollment,
     findEnrollmentsForCourse,
     findEnrollmentsForUser,
     deleteEnrollment,
+    enrollUserInCourse
   };
 }

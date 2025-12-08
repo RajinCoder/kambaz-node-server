@@ -1,20 +1,11 @@
 export default [
-  {
-    _id: "A1",
-    moduleId: "M_CS_01",
-    title: "Hello World Program",
-    description: "Write a simple program that prints Hello World.",
-    due: "2023-02-15",
-    completed: false,
-    score: 0
-  },
-  {
-    _id: "A2",
-    moduleId: "M_WD_01",
-    title: "Build a Landing Page",
-    description: "Create a responsive landing page using HTML/CSS.",
-    due: "2023-03-10",
-    completed: false,
-    score: 0
-  }
+  { "_id": "A101", "title": "Propulsion Assignment", "course": "RS101" },
+  { "_id": "A102", "title": "Combustion Analysis", "course": "RS101" },
+  { "_id": "A103", "title": "Nozzle Design Project", "course": "RS101" },
+  { "_id": "A201", "title": "Aerodynamics Quiz", "course": "RS102" },
+  { "_id": "A202", "title": "Flow Analysis", "course": "RS102" },
+  { "_id": "A203", "title": "Heating Analysis", "course": "RS102" },
+  { "_id": "A301", "title": "Structural Design Task", "course": "RS103" },
+  { "_id": "A302", "title": "Orbital Calculations", "course": "RS103" },
+  { "_id": "A303", "title": "Systems Engineering Exam", "course": "RS103" }
 ];
